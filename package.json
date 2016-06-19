@@ -1,6 +1,6 @@
 {
-  "name": "@easy-webpack/config-babel",
-  "description": "Easy Webpack configuration function for Babel",
+  "name": "@easy-webpack/config-electron-renderer",
+  "description": "Easy Webpack configuration function for electron-renderer",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
@@ -11,10 +11,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/easy-webpack/config-babel.git"
+    "url": "https://github.com/easy-webpack/config-electron-renderer.git"
   },
   "keywords": [
-    "babel",
+    "electron-renderer",
     "webpack",
     "easy",
     "configurator",
@@ -25,9 +25,9 @@
   "author": "Bazyli Brzóska <bazyli.brzoska@gmail.com> (https://invent.life)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/easy-webpack/config-babel/issues"
+    "url": "https://github.com/easy-webpack/config-electron-renderer/issues"
   },
-  "homepage": "https://github.com/easy-webpack/config-babel#readme",
+  "homepage": "https://github.com/easy-webpack/config-electron-renderer#readme",
   "devDependencies": {
     "ava": "^0.15.2",
     "semantic-release": "^4.3.5",
@@ -38,7 +38,7 @@
     "typings": "^1.3.0"
   },
   "dependencies": {
-    "babel-loader": "^6.2.4"
+    "webpack-hot-middleware": "^2.10.0"
   },
   "peerDependencies": {
     "@easy-webpack/core": "*"

@@ -1,24 +1,28 @@
 import {WebpackConfig, get} from '@easy-webpack/core'
-import * as path from 'path'
+const webpack = require('webpack')
 
 /**
- * Babel loader support for ES2015
- * See: https://github.com/babel/babel-loader
+ * @param externals list packages that should be used as node modules, directly from node_modules (without bundling)
  */
-export function babel(options = {
-    plugins: ['transform-decorators-legacy'],
-    presets: ['es2015-loose-native-modules', 'stage-1'],
-    cacheDirectory: true,
-  }, exclude: Array<string> = null) {
-  return function babel(this: WebpackConfig): WebpackConfig {
+export function electronMain() {
+  return function electronMain(this: WebpackConfig): WebpackConfig {
     return {
-      module: {
-        loaders: get(this, 'module.loaders', []).concat([{
-          test: /\.jsx?$/,
-          loader: 'babel',
-          exclude: exclude || this.metadata.root ? [path.join(this.metadata.root, 'node_modules')] : [],
-          query: options
-        }])
+      target: 'electron-renderer',
+
+      entry: this.metadata.HMR ? [
+        `webpack-hot-middleware/client?path=http://${this.metadata.WEBPACK_HOST}:${this.metadata.WEBPACK_PORT}/__webpack_hmr&reload=true`
+      ].concat(this.entry as Array<string>) : this.entry,
+
+      output: {
+        publicPath: `http://${this.metadata.WEBPACK_HOST}:${this.metadata.WEBPACK_PORT}/dist/`
+      },
+
+      plugins: (this.metadata.HMR ? [new webpack.HotModuleReplacementPlugin()] : [])
+        .concat(get(this, 'plugins', [])),
+
+      node: {
+        __dirname: false,
+        __filename: false
       }
     }
   }
