@@ -7,6 +7,10 @@ const webpack = require('webpack')
 export = function electronRenderer() {
   return function electronRenderer(this: WebpackConfig): WebpackConfig {
     return {
+      metadata: {
+        ELECTRON: 'renderer'
+      },
+
       target: 'electron-renderer',
 
       entry: this.metadata.HMR ? [
