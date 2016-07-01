@@ -6,7 +6,7 @@ const webpack = require('webpack')
  */
 export = function electronRenderer() {
   return function electronRenderer(this: WebpackConfig): WebpackConfig {
-    return {
+    const config = <WebpackConfig> {
       metadata: {
         ELECTRON: 'renderer'
       },
@@ -17,10 +17,6 @@ export = function electronRenderer() {
         `webpack-hot-middleware/client?path=http://${this.metadata.host}:${this.metadata.port}/__webpack_hmr&reload=true`
       ].concat(this.entry as Array<string>) : this.entry,
 
-      output: {
-        publicPath: `http://${this.metadata.host}:${this.metadata.port}/`
-      },
-
       plugins: (this.metadata.HMR ? [new webpack.HotModuleReplacementPlugin()] : [])
         .concat(get(this, 'plugins', [])),
 
@@ -29,5 +25,13 @@ export = function electronRenderer() {
         __filename: false
       }
     }
+
+    if (this.metadata.HMR) {
+      config.output = {
+        publicPath: `http://${this.metadata.host}:${this.metadata.port}/`
+      }
+    }
+
+    return config
   }
 }
