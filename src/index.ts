@@ -14,11 +14,11 @@ export = function electronRenderer() {
       target: 'electron-renderer',
 
       entry: this.metadata.HMR ? [
-        `webpack-hot-middleware/client?path=http://${this.metadata.WEBPACK_HOST}:${this.metadata.WEBPACK_PORT}/__webpack_hmr&reload=true`
+        `webpack-hot-middleware/client?path=http://${this.metadata.host}:${this.metadata.port}/__webpack_hmr&reload=true`
       ].concat(this.entry as Array<string>) : this.entry,
 
       output: {
-        publicPath: `http://${this.metadata.WEBPACK_HOST}:${this.metadata.WEBPACK_PORT}/dist/`
+        publicPath: `http://${this.metadata.host}:${this.metadata.port}/`
       },
 
       plugins: (this.metadata.HMR ? [new webpack.HotModuleReplacementPlugin()] : [])
