@@ -1,4 +1,5 @@
 import {WebpackConfig, get} from '@easy-webpack/core'
+import * as path from 'path'
 const webpack = require('webpack')
 
 /**
@@ -29,6 +30,12 @@ export = function electronRenderer() {
     if (this.metadata.HMR) {
       config.output = {
         publicPath: `http://${this.metadata.host}:${this.metadata.port}/`
+      }
+    }
+
+    if (this.metadata.root) {
+      config.devServer = {
+        contentBase: path.join(this.metadata.root, 'app')
       }
     }
 
